@@ -1,0 +1,58 @@
+---
+# Source: helm-cluster-certificates/templates/certificate-acme.yaml
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: k8s-auditlog.aaa-sandbox.its-software-services.com
+  namespace: istio-system  
+spec:
+  secretName: override-secret-cert
+  dnsNames:
+  - "*.aaa-sandbox.its-software-services.com"  
+  issuerRef:
+    name: lets-encrypt-issuer
+    kind: ClusterIssuer
+    group: cert-manager.io
+---
+# Source: helm-cluster-certificates/templates/certificate-selfsigned.yaml
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: dex-idp.aaa-sandbox.its-software-services.com
+  namespace: istio-system  
+spec:
+  secretName: dex-idp.aaa-sandbox.its-software-services.com
+  dnsNames:
+  - "dex-idp.aaa-sandbox.its-software-services.com"
+  issuerRef:
+    name: selfsigned-issuer
+---
+# Source: helm-cluster-certificates/templates/cluster-issuer-acme.yaml
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: lets-encrypt-issuer
+  namespace: cert-manager
+spec:
+  acme:
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    preferredChain: "ISRG Root X1"
+    email: seubpong.mon@truedigital.com
+    privateKeySecretRef:
+      name: lets-encrypt-issuer-key # The operator will create this for us
+    solvers:
+    - dns01:
+        cloudDNS:
+          project: its-artifact-commons
+          serviceAccountSecretRef:
+            key: service-account.json
+            name: gcp-cloud-dns-account-key
+---
+# Source: helm-cluster-certificates/templates/cluster-issuer-selfsigned.yaml
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: selfsigned-issuer
+  namespace: cert-manager
+spec:
+  selfSigned: {}

@@ -20,3 +20,5 @@ certificates:
 
   - name: k8s-auditlog
     issuerRef: lets-encrypt-issuer
+    isWildcard: true
+    secretName: override-secret-cert
