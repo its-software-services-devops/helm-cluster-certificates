@@ -1,0 +1,26 @@
+{{- $ctx := .Values }}
+{{- range .Values.certificates }}
+{{- if hasKey . "issuerRef" }}
+{{- $certName := printf "%s-%s" .name $ctx.global.envSuffix | trimSuffix "-" }}
+{{- $issuerName := printf "%s-%s" .issuerRef $ctx.global.envSuffix | trimSuffix "-" }}
+{{- $domainName := printf "%s.%s" $certName $ctx.global.domain }}
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ $domainName }}
+{{- if hasKey . "namespace" }}
+  namespace: {{ .namespace }}
+{{- else}}
+  namespace: {{ $ctx.global.certNamespace }}
+{{- end }}  
+spec:
+  secretName: {{ $domainName }}
+  dnsNames:
+  - "{{ $domainName }}"
+  issuerRef:
+    name: {{ $issuerName }}
+    kind: ClusterIssuer
+    group: cert-manager.io
+{{- end }}
+{{- end }}

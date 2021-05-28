@@ -1,0 +1,22 @@
+global:
+  domain: aaa-sandbox.its-software-services.com
+  certNamespace: istio-system
+  issuerNamespace: cert-manager
+  #envSuffix: ''
+  letsEncryptEnv: test #prod
+  dns01:
+    cloudDNS:
+      project: its-artifact-commons
+      serviceAccountSecretRef:
+        name: gcp-cloud-dns-account-key
+        key: service-account.json
+issuers:
+  - name: lets-encrypt-issuer
+    email: seubpong.mon@truedigital.com
+
+certificates:
+  - name: dex-idp
+    #issuerRef: lets-encrypt-issuer
+
+  - name: k8s-auditlog
+    issuerRef: lets-encrypt-issuer
