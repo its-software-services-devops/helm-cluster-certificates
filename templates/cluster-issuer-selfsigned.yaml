@@ -1,0 +1,9 @@
+{{- $ctx := .Values }}
+{{- $issuerName := printf "selfsigned-issuer-%s" $ctx.global.envSuffix | trimSuffix "-" }}
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: {{ $issuerName }}
+  namespace: {{ .Values.global.issuerNamespace }}
+spec:
+  selfSigned: {}

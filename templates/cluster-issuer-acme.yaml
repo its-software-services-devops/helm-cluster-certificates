@@ -1,0 +1,28 @@
+{{- $ctx := .Values }}
+{{- range .Values.issuers }}
+{{- $issuerName := printf "%s-%s" .name $ctx.global.envSuffix | trimSuffix "-" }}
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: {{ $issuerName }}
+  namespace: {{ $ctx.global.issuerNamespace }}
+spec:
+  acme:
+{{- if eq  $ctx.global.letsEncryptEnv "prod" }}
+    server: https://acme-v02.api.letsencrypt.org/directory
+{{- else }}
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+{{- end }}
+    preferredChain: "ISRG Root X1"
+    email: {{ .email }}
+    privateKeySecretRef:
+      name: {{ $issuerName }}-key # The operator will create this for us
+    solvers:
+    - dns01:
+{{- if hasKey . "dns01" }}
+{{- toYaml .dns01 | nindent 8 }}
+{{- else}}
+{{- toYaml $ctx.global.dns01 | nindent 8 }}
+{{- end }}
+{{- end }}

@@ -1,0 +1,11 @@
+global:
+  domain: aaa-sandbox.its-software-services.com
+  certNamespace: istio-system
+  issuerNamespace: cert-manager
+  envSuffix: ''
+  letsEncryptEnv: staging #staging
+  dns01: {}
+
+issuers: []
+
+certificates: []
