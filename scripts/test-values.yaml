@@ -1,5 +1,7 @@
 global:
-  domain: aaa-sandbox.its-software-services.com
+  domains:
+    tdg: onprem-rke-demo.tdg-int.net
+    its: onprem-rke-demo.its-software-services.com
   certNamespace: istio-system
   issuerNamespace: cert-manager
   #envSuffix: ''
@@ -32,9 +34,11 @@ issuers:
 
 certificates:
   - name: dex-idp
-    #issuerRef: lets-encrypt-issuer
+    domain: its
+    issuerRef: lets-encrypt-issuer
 
   - name: k8s-auditlog
     issuerRef: lets-encrypt-issuer
     isWildcard: true
     secretName: override-secret-cert
+    domain: tdg
