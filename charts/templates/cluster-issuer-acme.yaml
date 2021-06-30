@@ -19,10 +19,5 @@ spec:
     privateKeySecretRef:
       name: {{ $issuerName }}-key # The operator will create this for us
     solvers:
-    - dns01:
-{{- if hasKey . "dns01" }}
-{{- toYaml .dns01 | nindent 8 }}
-{{- else}}
-{{- toYaml $ctx.global.dns01 | nindent 8 }}
-{{- end }}
+{{- toYaml $ctx.global.solvers | nindent 4 }}
 {{- end }}

@@ -4,15 +4,31 @@ global:
   issuerNamespace: cert-manager
   #envSuffix: ''
   letsEncryptEnv: test #prod
-  dns01:
-    cloudDNS:
-      project: its-artifact-commons
-      serviceAccountSecretRef:
-        name: gcp-cloud-dns-account-key
-        key: service-account.json
+  solvers:
+    - dns01:
+        route53:
+          region: eu-central-1
+          accessKeyID: AKIAIOSFODNN7EXAMPLE
+          secretAccessKeySecretRef:
+            name: aws-route53-credentials
+            key: secret-access-key
+          # you can also assume a role with these credentials
+          role: arn:aws:iam::YYYYYYYYYYYY:role/dns-manager
+      selector:
+        dnsZones:
+          - "tdg-int.net"
+    - dns01:
+        cloudDNS:
+          project: its-artifact-commons
+          serviceAccountSecretRef:
+            name: gcp-cloud-dns-account-key
+            key: service-account.json
 issuers:
   - name: lets-encrypt-issuer
     email: seubpong.mon@truedigital.com
+    secrets:
+      aws-route53-credentials:
+        secret-access-key: secretValue
 
 certificates:
   - name: dex-idp

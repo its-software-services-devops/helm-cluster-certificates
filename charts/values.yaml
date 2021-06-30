@@ -4,8 +4,9 @@ global:
   issuerNamespace: cert-manager
   envSuffix: ''
   letsEncryptEnv: staging #staging
-  dns01: {}
-
+  solvers: []
+  issuerSecrets: {}
+  
 issuers: []
 
 certificates: []
