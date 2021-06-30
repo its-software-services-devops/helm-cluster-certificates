@@ -3,6 +3,15 @@ entries:
   helm-cluster-certificates:
   - apiVersion: v1
     appVersion: 1.16.0
+    created: "2021-06-30T09:27:21.825958029Z"
+    description: A Helm chart for creating certificates and issuers
+    digest: b05ba4f9f07ee4200cf4ae484c9d23f92c7efc8be4735333cf321b9250911a0a
+    name: helm-cluster-certificates
+    urls:
+    - https://its-software-services-devops.github.io/helm-cluster-certificates/helm-cluster-certificates-1.1.4.tgz
+    version: 1.1.4
+  - apiVersion: v1
+    appVersion: 1.16.0
     created: "2021-06-30T08:41:17.766044819Z"
     description: A Helm chart for creating certificates and issuers
     digest: 07c4c8150e25e39e412dc3371b6a83b117933969ccfcc951e9b74db92af82a0c
@@ -37,4 +46,4 @@ entries:
     urls:
     - https://its-software-services-devops.github.io/helm-cluster-certificates/helm-cluster-certificates-1.1.1.tgz
     version: 1.1.1
-generated: "2021-06-30T09:22:08.657388345Z"
+generated: "2021-06-30T09:27:21.825519025Z"
