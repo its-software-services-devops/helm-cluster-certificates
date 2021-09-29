@@ -26,9 +26,11 @@ spec:
   dnsNames:
 {{- if .isWildcard }}
   - "{{ $domainWildCard }}"
+{{- else if .isEmpty }}
+  - "{{ $selectedDomain }}"  
 {{- else}}
   - "{{ $domainName }}"
-{{- end }}  
+{{- end }}
   issuerRef:
     name: {{ $issuerName }}
     kind: ClusterIssuer
