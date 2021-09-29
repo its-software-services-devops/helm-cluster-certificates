@@ -39,6 +39,7 @@ certificates:
 
   - name: k8s-auditlog
     issuerRef: lets-encrypt-issuer
-    isWildcard: true
+    isWildcard: false
+    isEmpty: true
     secretName: override-secret-cert
     domain: tdg
